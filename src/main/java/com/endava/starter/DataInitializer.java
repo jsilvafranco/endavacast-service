@@ -5,10 +5,10 @@ package com.endava.starter;
  */
 
 import com.endava.model.Playlist;
+import com.endava.repository.PlaylistRepository;
 import com.endava.repository.TrackRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -24,10 +24,14 @@ public class DataInitializer implements
     ApplicationListener<ContextRefreshedEvent> {
 
   private TrackRepository trackRepository;
+  private PlaylistRepository playlistRepository;
   private WebApplicationContext context;
 
-  public DataInitializer(TrackRepository trackRepository, WebApplicationContext context){
+  @Autowired
+  public DataInitializer(TrackRepository trackRepository, PlaylistRepository playlistRepository,
+      WebApplicationContext context) {
     this.trackRepository = trackRepository;
+    this.playlistRepository = playlistRepository;
     this.context = context;
   }
 
@@ -41,8 +45,10 @@ public class DataInitializer implements
     try {
       Playlist playlist = mapper.readValue(resource.getInputStream(), Playlist.class);
       if(playlist!=null && !CollectionUtils.isEmpty(playlist.getSongs())){
-        Stream.of(playlist.getSongs()).forEach(s -> trackRepository.save(s));
+        playlist.getSongs().forEach(s -> trackRepository.save(s));
       }
+      //refactor to persist a collection.
+      playlistRepository.save(playlist);
     } catch (IOException e) {
       log.error("failed to load test file");
     }
