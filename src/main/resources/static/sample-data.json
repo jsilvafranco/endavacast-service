@@ -1,7 +1,7 @@
 {
   "id": "0001",
   "name" : "Awesome Mixtape Vol 1",
-  "ownerid" : "abf4cfr42c",
+  "ownerId" : "abf4cfr42c",
   "numberOfTracks" : 50,
   "visible": true,
   "featuredPlaylist": true,
@@ -21,10 +21,10 @@
       "id": "VFr5YfwR4",
       "title":"One",
       "artistId": "w55894fc",
-      "artistName": "Soda Stereo",
-      "album": "Doble Vida",
-      "albumArtUrl":"https://upload.wikimedia.org/wikipedia/en/a/a4/Doble_Vida.jpg",
-      "playbackTime": "5:46",
+      "artistName": "Metallica",
+      "album": "...And Justice for All",
+      "albumArtUrl":"https://upload.wikimedia.org/wikipedia/en/thumb/b/bd/Metallica_-_...And_Justice_for_All_cover.jpg/220px-Metallica_-_...And_Justice_for_All_cover.jpg",
+      "playbackTime": "7:46",
       "releaseYear" : "1988"
 
     }

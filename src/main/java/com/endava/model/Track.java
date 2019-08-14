@@ -1,5 +1,8 @@
 package com.endava.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,8 +11,11 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Entity
+@Table(name = "tracks")
 public class Track {
 
+  @Id
   private String id;
   private String title;
   private String artistId;

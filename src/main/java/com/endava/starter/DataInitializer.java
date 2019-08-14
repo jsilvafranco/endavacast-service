@@ -11,8 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -20,22 +20,17 @@ import org.springframework.web.context.WebApplicationContext;
 
 @Slf4j
 @Component
-public class DataInitializer implements
-    ApplicationListener<ContextRefreshedEvent> {
+public class DataInitializer {
 
-  private TrackRepository trackRepository;
-  private PlaylistRepository playlistRepository;
-  private WebApplicationContext context;
 
   @Autowired
-  public DataInitializer(TrackRepository trackRepository, PlaylistRepository playlistRepository,
-      WebApplicationContext context) {
-    this.trackRepository = trackRepository;
-    this.playlistRepository = playlistRepository;
-    this.context = context;
-  }
+  private TrackRepository trackRepository;
 
+  @Autowired
+  private PlaylistRepository playlistRepository;
 
+  @Autowired
+  private WebApplicationContext context;
 
 
 
@@ -54,8 +49,15 @@ public class DataInitializer implements
     }
   }
 
-  @Override
-  public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+  private void logSongsFromDataBase(){
+    playlistRepository.findAll().forEach(p -> System.out.println(p.getName()));
+    trackRepository.findAll().forEach(s-> System.out.println(s.getTitle()));
+  }
+
+
+  @EventListener(ApplicationReadyEvent.class)
+  public void onApplicationEvent() {
     loadInitialData();
+    logSongsFromDataBase();
   }
 }
