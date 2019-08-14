@@ -3,12 +3,12 @@ package com.endava.repository;
 
 import com.endava.model.Playlist;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
  * @author jsilva.
  */
-@Repository
+@RepositoryRestResource(collectionResourceRel = "playlists", path = "playlists")
 public interface PlaylistRepository extends CrudRepository<Playlist, String> {
 
 }
